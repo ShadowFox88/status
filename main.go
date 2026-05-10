@@ -165,6 +165,9 @@ func (s *server) ping(url string) bool {
 		return false
 	}
 	resp.Body.Close()
+
+	slog.Info("ping", "url", url, "status code", resp.StatusCode)
+
 	return resp.StatusCode < 500
 }
 
