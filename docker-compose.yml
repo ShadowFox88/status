@@ -6,19 +6,11 @@ services:
       - .env
     environment:
       - SERVICES_FILE=/services.yaml
-      - PORT=8080
     volumes:
       - ./services.yaml:/services.yaml:ro
-    ports:
-      - "8080:8080"        
     read_only: true                  
     security_opt:
       - no-new-privileges:true       
     cap_drop:
-      - ALL                          
-    networks:
-      - internal
-
-networks:
-  internal:
-    driver: bridge
+      - ALL
+    network_mode: host
