@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"sync"
 	"time"
+	"strings"
 
 	"golang.org/x/time/rate"
 	"gopkg.in/yaml.v3"
@@ -106,7 +107,8 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	key := r.Header.Get("X-API-Key")
+	key := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+
 	mac := hmac.New(sha256.New, s.apiKey)
 	mac.Write([]byte(key))
 	got := mac.Sum(nil)
