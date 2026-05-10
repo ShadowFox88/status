@@ -157,11 +157,13 @@ func (s *server) ping(url string) bool {
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
+		slog.Info("ping", "url", url, "error", err)
 		return false
 	}
 
 	resp, err := s.httpClient.Do(req)
 	if err != nil {
+		slog.Info("ping", "url", url, "error", err)
 		return false
 	}
 	resp.Body.Close()
